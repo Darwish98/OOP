@@ -1,0 +1,8 @@
+@startuml class_AB
+A <-- B
+c o-- d
+f *-- g
+h <|-- i
+j <|.. k
+
+@end
