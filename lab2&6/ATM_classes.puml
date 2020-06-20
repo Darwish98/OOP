@@ -1,0 +1,49 @@
+@startuml ATM
+API -- ATM : provides access
+API  -- Account : Modifies
+Card -- User : Owns
+Card -- ATM: tool to acess
+
+class ATM {
+    Verify Account 
+    Verify amount_Avalibilty
+    Check reciver_acconut_valdility
+    request amount 
+    transfer money
+    Print options()
+    scan options()
+    Print balance()
+    scan amount()
+    return amount()
+    scan reciver()
+}
+
+class API {
+    Verify Card
+    Accept Account
+}
+class Account {
+    Accept Card
+    return balance
+    Accept amount
+    Accept reciver_acconut
+
+}
+class User {
+    Inserts Card
+    Inserts PIN
+    Inserts Option
+    Inserts amount 
+    Inserts reciver
+    Takes Card
+    
+}
+
+
+class Card {
+    Card number
+    Card chip
+}
+
+
+@enduml

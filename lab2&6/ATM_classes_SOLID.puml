@@ -1,0 +1,194 @@
+' @startuml class_ATM
+'  skinparam linetype ortho
+
+
+' package "Physical"{
+    
+' ATM o--- Cash_Dispenser
+' ATM o--- Envelope_Aceeptor
+' ATM o--- Receipt_Printer
+' ATM o-- Keyboard
+' ATM o-- Display
+' ATM o-- Card_Reader
+' }
+
+
+' package "Non-Physical"{
+' ATM o-- ATM_API
+' ATM_API --> Bank 
+' Bank o-- Transaction
+' Bank --> Account 
+
+' Transaction <|-- Deposit
+' Transaction <|--Transfer
+' Transaction <|-- Withdraw
+' Cash_Dispenser <-- Withdraw
+' Envelope_Aceeptor <-- Deposit 
+' }
+
+
+
+' class ATM{
+'     string Location 
+'     string ManagedBy
+' }
+' class Account{
+'     int Balance 
+'     int AccountNumber
+'     string Name 
+
+
+' }
+' class Display{
+
+'     ShowMessage():
+    
+' }
+' abstract class Transaction{
+'     int amount
+'     checkLimit(): bool
+
+' }
+
+' class Bank { 
+    
+'     GetCardInfo(): bool
+'     GetBalance(): int
+' }
+
+' class ATM_API {
+'     CheckPIN(): bool
+'     CheckValidity(): bool 
+
+' }
+' class Keyboard{
+'     int input 
+'     print(): int
+' }
+' class Card_Reader{
+'     GetCardInfo(): bool
+' }
+
+' class Receipt_Printer{
+'     Print_receipt():bool
+' }
+' class Transfer{
+'     int ReciverAccountNumber
+'     transfer(): int
+
+' }
+' class Deposit{
+'     scanCash(): int 
+' }
+' Class Withdraw{
+'     ReturnCash(): bool
+' }
+
+
+
+' @enduml
+
+
+
+
+@startuml class_ATm
+ skinparam linetype ortho
+
+
+package "Physical"{
+ATM *-- Parts
+Parts <|- Cash_Dispenser
+Parts <|-- Envelope_Aceeptor
+Parts <|- Receipt_Printer
+Parts <|-- Keyboard
+Parts <|- Display
+Parts <|-- Card_Reader
+}
+
+
+package "Non-Physical"{
+
+ATM_API --> Bank 
+Bank o-- Transaction
+Bank --> Account 
+
+Transaction <|-- Deposit
+Transaction <|--Transfer
+Transaction <|-- Withdraw
+' Cash_Dispenser <-- Withdraw
+' Envelope_Aceeptor <-- Deposit 
+}
+
+ATM_Interface o- ATM_API
+ATM <|-- ATM_Interface
+
+
+interface ATM_Interface{
+    string Location 
+    string ManagedBy
+}
+
+class ATM{
+
+}
+
+
+abstract class Parts{
+    CheckCondition(): string
+
+}
+class Account{
+    int Balance 
+    int AccountNumber
+    string Name 
+
+
+}
+class Display{
+
+    ShowMessage():
+    
+}
+abstract class Transaction{
+    int amount
+    checkLimit(): bool
+
+}
+
+class Bank { 
+    
+    GetCardInfo(): bool
+    GetBalance(): int
+}
+
+class ATM_API {
+    CheckPIN(): bool
+    CheckValidity(): bool 
+
+}
+class Keyboard{
+    int input 
+    print(): int
+}
+class Card_Reader{
+    GetCardInfo(): bool
+}
+
+class Receipt_Printer{
+    Print_receipt():bool
+}
+class Transfer{
+    int ReciverAccountNumber
+    transfer(): int
+
+}
+class Deposit{
+    scanCash(): int 
+}
+Class Withdraw{
+    ReturnCash(): bool
+}
+
+
+
+@enduml

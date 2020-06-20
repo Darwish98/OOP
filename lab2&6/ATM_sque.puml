@@ -1,0 +1,187 @@
+
+
+' @startuml HAPPY_FLOW_ATM
+
+' par "User" as U:
+' par "ATM" as ATM:
+' par "account" as ac:
+' par "API" as API
+
+
+
+' title Money withdraw proccess
+
+' loop Withdraw money
+
+' U->ATM: Insert Card()
+' activate U
+' activate ATM
+' ATM-->U: InsertPIN():int
+' U->ATM: int PIN
+' deactivate U
+' ATM->API:
+' deactivate ATM
+' activate API
+
+' API->ac: ControlPIN(int PIN)
+' activate ac
+' ac-->API: PIN correct
+' API->ac: checkIfValid()
+' ac-->API: account valid
+' deactivate ac
+' API-->ATM:
+' deactivate API
+' activate ATM
+' ATM-->U: scanAmount():int 
+' activate U
+' U->ATM: int amount;
+' deactivate U
+' ATM->API: takeRequest
+' deactivate ATM
+' activate API
+' API->ac:  CheckAvailablilty
+' activate ac
+' ac-->API: available():bool
+' deactivate ac
+' API-->ATM: transactionSucess
+' deactivate API
+' activate ATM
+' ATM-->U: ReturnCash
+' deactivate ATM
+' activate U
+' end
+
+
+' loop transfer
+
+' actor receiver
+
+' U->ATM: Insert Card():bool
+' activate ATM
+' ATM-->U: InsertPIN():int
+' U->ATM: int PIN
+' deactivate U
+' ATM->API:
+' deactivate ATM
+' activate API
+' API->ac: ControlPIN(int PIN)
+' activate ac
+' ac-->API: PIN correct
+' API->ac: checkIfValid():bool
+' ac-->API: account valid
+' deactivate ac
+' API-->ATM:
+' deactivate API
+' activate ATM
+' ATM-->U: scanAmount():int 
+' activate U
+' ATM-->U: scan_recipient():int 
+' U->ATM: int amount;
+' U->ATM: int recipient;
+' deactivate U
+' ATM->API: takeRequest
+' deactivate ATM
+' activate API
+' API->ac:  CheckAvailablilty
+' activate ac
+' ac-->API: available():bool
+' API-> receiver: transfer money
+' deactivate ac
+' API-->ATM: transferSucess
+' deactivate API
+' activate ATM
+' ATM-->U: print_transferSucess
+' deactivate ATM
+' activate U
+' end
+
+
+' loop check balance
+
+' U->ATM: Insert Card():bool
+' activate ATM
+' ATM-->U: InsertPIN():int
+' U->ATM: int PIN
+' deactivate U
+' ATM->API:
+' deactivate ATM
+' activate API
+
+' API->ac: ControlPIN(int PIN)
+' activate ac
+' ac-->API: PIN correct
+' API->ac: checkIfValid():bool
+' ac-->API: account valid
+' deactivate ac
+' API-->ATM: int Print_balance()
+' deactivate API
+' activate ATM
+' ATM-->U: balance shown
+' deactivate ATM
+' activate U 
+' deactivate U
+' end
+
+' @enduml 
+
+
+
+
+@startuml ATM
+actor User
+User <-- ATM: Show welcoming screen
+User -> ATM: Insert card
+User <-- ATM: Request PIN
+User -> ATM: Inserts PIN
+ATM -> API:  Verify Account
+API -> Account: Verify card 
+API <-- Account: Accept card
+API -> ATM: Accept Account
+User <-- ATM: Shows options
+
+loop ChooseOption
+loop ShowBalance
+User -> ATM: Choose ShowBalance
+ATM -> Account: request balance
+ATM <-- Account: return balance
+ATM->User: Show balance meesage
+User <-- ATM: return card
+User -> ATM: Take card
+User <-- ATM: Show welcoming screen
+end 
+
+loop withdrawal 
+User -> ATM: Choose withdrawal
+User <-- ATM: Enter amount message
+User -> ATM: Inserts amount
+ATM -> Account:  Verify amount availbilty
+ATM <-- Account: Accepts amount 
+User <-- ATM: return money
+User <-- ATM: return receipt
+User <-- ATM: return card
+User -> ATM: Take card
+User <-- ATM: Show welcoming screen
+end 
+
+loop Transfer
+actor reciver
+User -> ATM: Choose Transfer
+User <-- ATM: Enter reciver message
+User -> ATM: Inserts reciver 
+User <-- ATM: Enter amount message
+User -> ATM: Inserts amount
+ATM -> Account: Verify amount availbilty
+ATM <-- Account: Accepts amount
+ATM -> reciver: Check reciver acconut valdility 
+reciver->ATM: Accepts reciver account 
+ATM->reciver: transfer money 
+reciver->ATM: transfer  done
+ATM->User: Show transfer successful
+User <-- ATM: return receipt
+User <-- ATM: return  card
+User -> ATM: Take card
+User <-- ATM: Show welcoming screen
+end 
+end
+@enduml
+
